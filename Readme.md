@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Марат Шаймарданов](https://up.htmlacademy.ru/yii/1/user/31950).
-* Наставник: `Неизвестно`.
+* Наставник: [Влад Григорев](https://htmlacademy.ru/profile/id1249831).
 
 ---
 
