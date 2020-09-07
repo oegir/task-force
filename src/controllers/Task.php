@@ -1,4 +1,5 @@
 <?php
+namespace htmlacademy\controllers;
 
 class Task
 {
@@ -74,5 +75,3 @@ class Task
         }
     }
 }
-
-$task = new Task(1, 2);
