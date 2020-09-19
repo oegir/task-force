@@ -2,6 +2,8 @@
 
 namespace htmlacademy\controllers;
 
+use htmlacademy\ex\MyException;
+
 class Task
 {
     const ACTION_NEW = 'Новое';
@@ -23,6 +25,10 @@ class Task
             self::ACTION_NEW => [new WorkAction(), new CancelAction()],
             self::ACTION_WORK => [new FailedAction(), new CompleteAction()],
         ];
+
+        if (!array_key_exists($action, $arr)) {
+            throw new MyException("Метода '" . $action. "' не существует");
+        }
 
         foreach ($arr[$action] as $method) {
             if ($method->isRightMethod($user_id, $this->owner_id, $this->worker_id)) {
