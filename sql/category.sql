@@ -1,0 +1,12 @@
+SET foreign_key_checks = 0;
+INSERT INTO `category` (id,name,slug) VALUES ("1","Уборка","clean");
+INSERT INTO `category` (id,name,slug) VALUES ("2","Курьерские услуги","courier");
+INSERT INTO `category` (id,name,slug) VALUES ("3","Доставка","delivery");
+INSERT INTO `category` (id,name,slug) VALUES ("4","Компьютерная помощь","neo");
+INSERT INTO `category` (id,name,slug) VALUES ("5","Ремонт квартирный","flat");
+INSERT INTO `category` (id,name,slug) VALUES ("6","Ремонт техники","repair");
+INSERT INTO `category` (id,name,slug) VALUES ("7","Красота","beauty");
+INSERT INTO `category` (id,name,slug) VALUES ("8","Фото","photo");
+INSERT INTO `category` (id,name,slug) VALUES ("9","Переводы","translation");
+INSERT INTO `category` (id,name,slug) VALUES ("10","Переезды","cargo");
+SET foreign_key_checks = 1;

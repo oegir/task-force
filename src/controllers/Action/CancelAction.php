@@ -1,26 +1,26 @@
 <?php
 
 
-namespace htmlacademy\controllers;
+namespace htmlacademy\controllers\Action;
 
 
-class FailedAction extends AbstractAction
+class CancelAction extends AbstractAction
 {
     public function getName()
     {
-        return 'Провалено';
+        return 'Отменено';
     }
 
     public function getRealName()
     {
-        return 'action_failed';
+        return 'action_cancel';
     }
 
     public function isRightMethod($user_id, $owner_id, $worker_id): bool
     {
         $result = false;
 
-        if ($user_id == $worker_id) {
+        if ($user_id == $owner_id) {
             $result = true;
         }
 
