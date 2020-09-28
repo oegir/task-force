@@ -2,9 +2,11 @@
 
 namespace htmlacademy\controllers;
 
+use htmlacademy\ex\MyException;
+
 class Task
 {
-    const ACTION_NEW = 'Новое';
+    const ACTION_NEW  = 'Новое';
     const ACTION_WORK = 'В работе';
 
     private $worker_id;
@@ -14,22 +16,27 @@ class Task
     public function __construct($worker_id, $owner_id)
     {
         $this->worker_id = $worker_id;
-        $this->owner_id = $owner_id;
+        $this->owner_id  = $owner_id;
     }
 
-    public function getNextAction($action, $user_id)
+    public function getNextAction(string $action, int $user_id): ?object
     {
-        $arr = [
-            self::ACTION_NEW => [new WorkAction(), new CancelAction()],
+        $result = null;
+        $arr    = [
+            self::ACTION_NEW  => [new WorkAction(), new CancelAction()],
             self::ACTION_WORK => [new FailedAction(), new CompleteAction()],
         ];
 
+        if (!array_key_exists($action, $arr)) {
+            throw new MyException("Метода '" . $action . "' не существует");
+        }
+
         foreach ($arr[$action] as $method) {
             if ($method->isRightMethod($user_id, $this->owner_id, $this->worker_id)) {
-                return $method;
+                $result = $method;
             };
         }
 
-        return false;
+        return $result;
     }
 }
