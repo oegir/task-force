@@ -1,7 +1,7 @@
 <?php
 
 
-namespace htmlacademy\controllers;
+namespace htmlacademy\controllers\Action;
 
 
 abstract class AbstractAction
