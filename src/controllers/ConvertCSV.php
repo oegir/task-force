@@ -10,10 +10,12 @@ class ConvertCSV
 {
     private $name;
     private $text;
+    private $path;
 
     public function __construct(string $csvFile, array $columns)
     {
         $this->name = basename($csvFile, ".csv");
+        $this->path = \Yii::getAlias('@project');
 
         if (!file_exists($csvFile)) {
             throw new SourceFileException("Файла '" . $csvFile . "' не существует");
@@ -49,11 +51,10 @@ class ConvertCSV
 
     private function saveToDir()
     {
-        if (!is_dir("sql")) {
-            mkdir("sql", 0777, true);
+        if (!is_dir($this->path . "sql")) {
+            mkdir($this->path . "sql", 0777, true);
         }
-
-        file_put_contents('sql/' . $this->name . '.sql', $this->text);
+        file_put_contents($this->path . '/sql/' . $this->name . '.sql', $this->text);
     }
 
 }

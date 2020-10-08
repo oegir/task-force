@@ -6,8 +6,8 @@ use htmlacademy\ex\FileFormatException;
 use htmlacademy\ex\SourceFileException;
 use htmlacademy\controllers\ConvertCSV;
 
-require_once 'vendor/autoload.php';
-require_once 'functions.php';
+$path = \Yii::getAlias('@project');
+$this->title = 'Task';
 
 $task = new Task(1, 2);
 
@@ -31,7 +31,7 @@ try {
 } catch (MyException $e) {
     debug($e->getMessage());
 }
-$baseDir = "data";
+$baseDir = $path . "/data";
 
 try {
     $category = new ConvertCSV($baseDir . "/category.csv", ['id', 'name', 'slug']);
@@ -47,4 +47,6 @@ try {
 } catch (FileFormatException $e) {
     echo("Неверная форма файла импорта: " . $e->getMessage());
 }
+
+?>
 
