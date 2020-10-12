@@ -42,6 +42,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
+                '/task' => 'site/task',
             ],
         ],
     ],

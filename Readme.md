@@ -14,6 +14,15 @@ _Не удаляйте и не обращайте внимание на файл
 _`.editorconfig`, `.gitattributes`, `.gitignore`._
 
 ---
+**пример генерации кода**
+
+```php yii fixture/generate city --count=10 --language=ru_RU```
+
+**Загрузка в базу**
+
+```php yii fixture/load City```
+
+---
 Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 developing complex Web applications with multiple tiers.
 
