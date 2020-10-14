@@ -9,7 +9,18 @@ use htmlacademy\controllers\ConvertCSV;
 $path = \Yii::getAlias('@project');
 $this->title = 'Task';
 
+function debug($arr)
+{
+    echo '<pre>' . print_r($arr, true), '</pre>';
+}
+
 $task = new Task(1, 2);
+foreach ($profiles as $profile) {
+    debug('phone '.$profile['phone']);
+}
+foreach ($cities as $city) {
+    debug($city['name']);
+}
 
 try {
     echo " из статуса `Новое` заказчик может перевести задачу в `Отменить`";

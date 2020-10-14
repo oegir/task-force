@@ -14,6 +14,9 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\db\Query;
+use frontend\models\City;
+
 
 /**
  * Site controller
@@ -261,6 +264,12 @@ class SiteController extends Controller
     public function actionTask()
     {
         $this->layout = false;
-        return $this->render('task');
+        $query = new Query();
+        $query->select([ 'name'])->from('city')->all();
+        $cities = $query->all();
+        $city = City::findOne(1);
+        $profiles = $city->profiles;
+
+        return $this->render('task',compact('cities','profiles'));
     }
 }
