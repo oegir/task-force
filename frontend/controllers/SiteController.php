@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\controllers;
 
 use frontend\models\ResendVerificationEmailForm;
@@ -265,11 +266,11 @@ class SiteController extends Controller
     {
         $this->layout = false;
         $query = new Query();
-        $query->select([ 'name'])->from('city')->all();
+        $query->select(['name'])->from('city')->all();
         $cities = $query->all();
         $city = City::findOne(1);
         $profiles = $city->profiles;
 
-        return $this->render('task',compact('cities','profiles'));
+        return $this->render('task', compact('cities', 'profiles'));
     }
 }

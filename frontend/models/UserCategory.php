@@ -5,23 +5,23 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "task_category".
+ * This is the model class for table "user_category".
  *
  * @property int $id
- * @property int $task_id
- * @property int $category_id
+ * @property int|null $user_id
+ * @property int|null $category_id
  *
  * @property Category $category
- * @property Task $task
+ * @property User $user
  */
-class TaskCategory extends \yii\db\ActiveRecord
+class UserCategory extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'task_category';
+        return 'user_category';
     }
 
     /**
@@ -30,10 +30,9 @@ class TaskCategory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'category_id'], 'required'],
-            [['task_id', 'category_id'], 'integer'],
+            [['user_id', 'category_id'], 'integer'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['category_id' => 'id']],
-            [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -44,7 +43,7 @@ class TaskCategory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'task_id' => 'Task ID',
+            'user_id' => 'User ID',
             'category_id' => 'Category ID',
         ];
     }
@@ -56,16 +55,16 @@ class TaskCategory extends \yii\db\ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasMany(Category::class, ['id' => 'category_id']);
+        return $this->hasMany(Category::className(), ['id' => 'category_id']);
     }
 
     /**
-     * Gets query for [[Task]].
+     * Gets query for [[User]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTask()
+    public function getUser()
     {
-        return $this->hasMany(Task::class, ['id' => 'task_id']);
+        return $this->hasMany(User::className(), ['id' => 'user_id']);
     }
 }
