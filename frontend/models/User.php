@@ -15,6 +15,9 @@ use Yii;
  *
  * @property Message[] $messages
  * @property Opinion[] $opinions
+ * @property UserCategory[] $userCategories
+ * @property UserProfile[] $userProfiles
+ * @property UserTask[] $userTasks
  */
 class User extends \yii\db\ActiveRecord
 {
@@ -72,5 +75,35 @@ class User extends \yii\db\ActiveRecord
     public function getOpinions()
     {
         return $this->hasMany(Opinion::className(), ['owner_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserCategories]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserCategories()
+    {
+        return $this->hasMany(UserCategory::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserProfiles]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProfile()
+    {
+        return $this->hasOne(UserProfile::class, ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UserTasks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserTasks()
+    {
+        return $this->hasMany(UserTask::className(), ['user_id' => 'id']);
     }
 }
