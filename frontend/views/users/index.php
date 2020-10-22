@@ -22,6 +22,9 @@ use frontend\helpers\SiteHelper;
     </div>
     <? foreach ($users as $user): ?>
         <?
+        if (!$user->userProfile) {
+            return false;
+        }
         $about = $user->userProfile['profile']['about'];
         $tasksCount = count($user->userTasks);
         $opinionsCount = count($user->opinions);
