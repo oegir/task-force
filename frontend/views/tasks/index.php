@@ -1,8 +1,11 @@
 <?
 
 use frontend\helpers\SiteHelper;
+use yii\widgets\ActiveForm;
 
 /** @var $tasks */
+/** @var $categories */
+/** @var $model */
 
 ?>
 
@@ -52,36 +55,49 @@ use frontend\helpers\SiteHelper;
 </section>
 <section class="search-task">
     <div class="search-task__wrapper">
-        <form class="search-task__form" name="test" method="post" action="#">
-            <fieldset class="search-task__categories">
-                <legend>Категории</legend>
-                <input class="visually-hidden checkbox__input" id="1" type="checkbox" name="" value="" checked>
-                <label for="1">Курьерские услуги </label>
-                <input class="visually-hidden checkbox__input" id="2" type="checkbox" name="" value="" checked>
-                <label for="2">Грузоперевозки </label>
-                <input class="visually-hidden checkbox__input" id="3" type="checkbox" name="" value="">
-                <label for="3">Переводы </label>
-                <input class="visually-hidden checkbox__input" id="4" type="checkbox" name="" value="">
-                <label for="4">Строительство и ремонт </label>
-                <input class="visually-hidden checkbox__input" id="5" type="checkbox" name="" value="">
-                <label for="5">Выгул животных </label>
-            </fieldset>
-            <fieldset class="search-task__categories">
-                <legend>Дополнительно</legend>
-                <input class="visually-hidden checkbox__input" id="6" type="checkbox" name="" value="">
-                <label for="6">Без откликов</label>
-                <input class="visually-hidden checkbox__input" id="7" type="checkbox" name="" value="" checked>
-                <label for="7">Удаленная работа </label>
-            </fieldset>
-            <label class="search-task__name" for="8">Период</label>
-            <select class="multiple-select input" id="8" size="1" name="time[]">
-                <option value="day">За день</option>
-                <option selected value="week">За неделю</option>
-                <option value="month">За месяц</option>
-            </select>
-            <label class="search-task__name" for="9">Поиск по названию</label>
-            <input class="input-middle input" id="9" type="search" name="q" placeholder="">
-            <button class="button" type="submit">Искать</button>
-        </form>
+        <?php $form = ActiveForm::begin([
+            'id' => 'search-task',
+            'method' => 'GET',
+            'options' => ['class' => 'search-task__form']
+        ]);
+        ?>
+        <fieldset class="search-task__categories">
+            <legend>Категории</legend>
+            <?= $form->field($model, 'category')->checkboxList($categories, [
+                'item' => function ($index, $category, $name, $checked, $id) {
+                    $isChecked = $checked ? 'checked' : '';
+                    return "
+                                <input class='visually-hidden checkbox__input' type='checkbox' {$isChecked} name='$name' id='category-$id'
+                                value='$id'>
+                                <label for='category-$id'>{$category->name}</label>
+                            ";
+                }
+            ])->label(false) ?>
+        </fieldset>
+        <fieldset class="search-task__categories">
+            <legend>Дополнительно</legend>
+            <?= $form->field($model,
+                'noResponse',
+                ['template' => "{input}{label}"])->
+            checkbox(['class' => 'visually-hidden checkbox__input'], false)->
+            label('Без откликов'); ?>
+            <?= $form->field($model,
+                'remoteWork',
+                ['template' => "{input}{label}"])->
+            checkbox(['class' => 'visually-hidden checkbox__input'], false)->
+            label('Удаленная работа'); ?>
+        </fieldset>
+        <?
+        $times = [
+            'day' => 'За день',
+            'week' => 'За неделю',
+            'month' => 'За месяц',
+            'all' => 'За все время'
+        ];
+        echo $form->field($model, 'time')->dropDownList($times, ['prompt' => 'Период'])
+        ?>
+        <?= $form->field($model, 'q')->textInput(['class' => 'input-middle input', 'type' => 'search'])->label('Поиск по названию') ?>
+        <button class="button" type="submit">Искать</button>
+        <?php ActiveForm::end(); ?>
     </div>
 </section>
