@@ -1,6 +1,7 @@
 <?
 
 use frontend\helpers\SiteHelper;
+use frontend\widgets\Rate;
 use yii\widgets\ActiveForm;
 
 /** @var $users */
@@ -25,55 +26,32 @@ use yii\widgets\ActiveForm;
     </div>
     <? foreach ($users as $user): ?>
         <?
-        $tasksCount = count($user->userTasks);
+        $tasksCount = count($user->tasks);
         $opinionsCount = count($user->opinions);
-        $rate = 0;
-
-        foreach ($user->opinions as $opinion) {
-            $rate += $opinion['rate'];
-        }
-
-        if ($opinionsCount) {
-            $rate = $rate / $opinionsCount;
-        }
-
-        $thisCategories = [];
-
-        foreach ($user->userCategories as $userCategory) {
-            $thisCategories[] = $userCategory->category[0];
-        }
-
         ?>
         <div class="content-view__feedback-card user__search-wrapper">
             <div class="feedback-card__top">
                 <div class="user__search-icon">
-                    <a href="#"><img src="/img/man-glasses.jpg" width="65" height="65" alt=""></a>
+                    <a href="/users/<?= $user['id'] ?>">
+                        <img src="/img/<?= $user->avatar?>" width="65"
+                                     height="65" alt="">
+                    </a>
                     <span><?= $tasksCount ?> <?= SiteHelper::plural($tasksCount, ['задание', 'задания', 'заданий']) ?></span>
                     <span><?= $opinionsCount ?> <?= SiteHelper::plural($opinionsCount, ['отзыв', 'отзыва', 'отзывов']) ?></span>
                 </div>
                 <div class="feedback-card__top--name user__search-card">
-                    <p class="link-name"><a href="#" class="link-regular"><?= $user['name'] ?></a></p>
-                    <? if ($rate): ?>
-                        <? $rateCounts = round($rate);
-                        for ($i = 1; $i <= $rateCounts; $i++) {
-                            echo "<span></span>";
-                        }
-                        for ($i = 1; $i <= 5 - $rateCounts; $i++) {
-                            echo '<span class="star-disabled"></span>';
-                        }
-                        ?>
-                        <b><?= $rate ?></b>
-                    <? endif; ?>
+                    <p class="link-name"><a href="/users/<?= $user['id'] ?>" class="link-regular"><?= $user['name'] ?></a></p>
+                    <?= $user->rate ? Rate::widget(['rate' => $user->rate, 'option' => 'stars-and-rate']) : "" ?>
                     <p class="user__search-content">
-                        <?= $user->userProfile['profile']['about'] ?>
+                        <?= $user->profile ? $user->profile[0]->about : "" ?>
                     </p>
                 </div>
                 <span
                     class="new-task__time">Был на сайте <?= Yii::$app->formatter->asRelativeTime($user['date_last']) ?></span>
             </div>
-            <? if (count($thisCategories)): ?>
+            <? if (count($user->categories)): ?>
                 <div class="link-specialization user__search-link--bottom">
-                    <? foreach ($thisCategories as $category) : ?>
+                    <? foreach ($user->categories as $category) : ?>
                         <a href="/category/<?= $category['slug'] ?>"
                            class="link-regular"><?= $category['name'] ?></a>
                     <? endforeach; ?>

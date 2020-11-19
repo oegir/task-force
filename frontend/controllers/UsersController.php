@@ -2,9 +2,12 @@
 
 namespace frontend\controllers;
 
+use Yii;
+use yii\web\NotFoundHttpException;
+use yii\web\Controller;
+
 use frontend\models\Category;
 use frontend\models\UserModel;
-use yii\web\Controller;
 use frontend\models\User;
 
 class UsersController extends Controller
@@ -67,5 +70,31 @@ class UsersController extends Controller
         $users = $model->applyFilters($allUsers)->all();
 
         return $this->render('index', compact('users', 'categories', 'model'));
+    }
+
+    public function actionView($id)
+    {
+        $user = User::findOne($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException("Пользователь с ID $id не найден");
+        }
+
+        if (!$user->profile) {
+            return Yii::$app->response->redirect(['users/user', 'id' => $id]);
+        }
+
+        return $this->render('view', compact('user'));
+    }
+
+    public function actionUser($id)
+    {
+        $user = User::findOne($id);
+
+        if (!$user) {
+            throw new NotFoundHttpException("Пользователь с ID $id не найден");
+        }
+
+        return $this->render('user', compact('user'));
     }
 }

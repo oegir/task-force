@@ -63,12 +63,44 @@ class Task extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[TaskCategories]].
+     * Gets query for [[Categories]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getTaskCategories()
+
+    public function getCategories()
     {
-        return $this->hasMany(TaskCategory::className(), ['task_id' => 'id']);
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])->
+        viaTable("task_category",['task_id'=>'id']);
+    }
+
+    /**
+     * Gets query for [[Files]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFiles()
+    {
+        return $this->hasMany(TaskFile::className(), ['task_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'owner_id']);
+    }
+
+    /**
+     * Gets query for [[Response]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResponse()
+    {
+        return $this->hasMany(Response::className(), ['task_id' => 'id']);
     }
 }

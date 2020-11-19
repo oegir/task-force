@@ -13,17 +13,11 @@ use yii\widgets\ActiveForm;
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
         <? foreach ($tasks as $task): ?>
-            <?
-            $thisCategories = [];
-            foreach ($task->taskCategories as $taskCategory) {
-                $thisCategories[] = $taskCategory->category[0];
-            }
-            ?>
             <div class="new-task__card">
                 <div class="new-task__title">
-                    <a href="#" class="link-regular"><h2><?= $task['name'] ?></h2></a>
+                    <a href="/tasks/<?=$task['id']?>" class="link-regular"><h2><?= $task['name'] ?></h2></a>
                     <div class="links" style="display: flex;margin-left: -10px;">
-                        <? foreach ($thisCategories as $category): ?>
+                        <? foreach ($task->categories as $category): ?>
                             <a class="new-task__type link-regular" style="margin-left: 10px;"
                                href="<?= '/category/' . $category['slug'] ?>">
                                 <p><?= $category['name'] ?></p>
@@ -32,7 +26,7 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
                 <div
-                    class="new-task__icon new-task__icon--<?= SiteHelper::array_first($thisCategories)['slug'] ?>"></div>
+                    class="new-task__icon new-task__icon--<?= SiteHelper::array_first($task->categories)['slug'] ?>"></div>
                 <p class="new-task_description">
                     <?= $task['description'] ?>
                 </p>
@@ -66,8 +60,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'category')->checkboxList($categories, [
                 'item' => function ($index, $category, $name, $checked, $id) {
                     $isChecked = $checked ? 'checked' : '';
-                    return "
-                                <input class='visually-hidden checkbox__input' type='checkbox' {$isChecked} name='$name' id='category-$id'
+                    return "<input class='visually-hidden checkbox__input' type='checkbox' {$isChecked} name='$name' id='category-$id'
                                 value='$id'>
                                 <label for='category-$id'>{$category->name}</label>
                             ";

@@ -92,4 +92,14 @@ class Profile extends \yii\db\ActiveRecord
     {
         return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id']);
+    }
 }
