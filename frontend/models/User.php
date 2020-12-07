@@ -74,27 +74,40 @@ class User extends \yii\db\ActiveRecord
      */
     public function getOpinions()
     {
-        return $this->hasMany(Opinion::className(), ['owner_id' => 'id']);
+        return $this->hasMany(Opinion::className(), ['worker_id' => 'id']);
     }
 
     /**
-     * Gets query for [[UserCategories]].
+     * Gets query for [[Categories]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserCategories()
+    public function getCategories()
     {
-        return $this->hasMany(UserCategory::className(), ['user_id' => 'id']);
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])->
+        viaTable("user_category", ['user_id' => 'id']);
     }
 
     /**
-     * Gets query for [[UserProfiles]].
+     * Gets query for [[Profile]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUserProfile()
+    public function getProfile()
     {
-        return $this->hasOne(UserProfile::class, ['user_id' => 'id']);
+        return $this->hasMany(Profile::className(), ['id' => 'profile_id'])->
+        viaTable("user_profile", ['user_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Task::className(), ['id' => 'task_id'])->
+        viaTable('user_task', ['user_id' => 'id']);
     }
 
     /**
@@ -104,6 +117,28 @@ class User extends \yii\db\ActiveRecord
      */
     public function getUserTasks()
     {
-        return $this->hasMany(UserTask::className(), ['user_id' => 'id']);
+        return $this->hasMany(Task::className(), ['owner_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Rate]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRate()
+    {
+        $rate = 0;
+        $opinions = $this->opinions;
+        foreach ($opinions as $opinion) {
+            $rate += $opinion['rate'];
+        }
+
+        $opinionsCount = count($opinions);
+
+        if ($opinionsCount) {
+            $rate = round($rate / $opinionsCount, 1);
+        }
+
+        return $rate;
     }
 }

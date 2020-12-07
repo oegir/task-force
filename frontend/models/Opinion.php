@@ -76,4 +76,14 @@ class Opinion extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Profile::className(), ['id' => 'worker_id']);
     }
+
+    /**
+     * Gets query for [[Task]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTask()
+    {
+        return $this->hasOne(Task::className(), ['id' => 'task_id']);
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace frontend\helpers;
 
+use DateTime;
+
 class SiteHelper
 {
     public static function array_first($array, $default = null)
@@ -23,4 +25,13 @@ class SiteHelper
     {
         return $words[($number % 100 > 4 && $number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][min($number % 10, 5)]];
     }
+
+    public static function diffInYears($date)
+    {
+        $now = new DateTime();
+        $date = DateTime::createFromFormat("Y-m-d", $date);
+        $interval = $now->diff($date);
+        return $interval->y;
+    }
+
 }

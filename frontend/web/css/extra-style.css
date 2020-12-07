@@ -1,0 +1,5 @@
+.one-rate span,
+.two-rate span,
+.four-rate span {
+  background-image: url(../img/rate.png);
+}

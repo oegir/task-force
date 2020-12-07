@@ -14,6 +14,7 @@ class AppAsset extends AssetBundle
     public $css = [
         'css/normalize.css',
         'css/style.css',
+        'css/extra-style.css',
     ];
     public $js = [
         'js/dropzone.js',
