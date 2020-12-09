@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         <? foreach ($tasks as $task): ?>
             <div class="new-task__card">
                 <div class="new-task__title">
-                    <a href="/tasks/<?=$task['id']?>" class="link-regular"><h2><?= $task['name'] ?></h2></a>
+                    <a href="/tasks/<?= $task['id'] ?>" class="link-regular"><h2><?= $task['name'] ?></h2></a>
                     <div class="links" style="display: flex;margin-left: -10px;">
                         <? foreach ($task->categories as $category): ?>
                             <a class="new-task__type link-regular" style="margin-left: 10px;"
@@ -87,7 +87,7 @@ use yii\widgets\ActiveForm;
             'month' => 'За месяц',
             'all' => 'За все время'
         ];
-        echo $form->field($model, 'time')->dropDownList($times, ['prompt' => 'Период'])
+        echo $form->field($model, 'time')->dropDownList($times, ['prompt' => 'Период'])->label(false)
         ?>
         <?= $form->field($model, 'q')->textInput(['class' => 'input-middle input', 'type' => 'search'])->label('Поиск по названию') ?>
         <button class="button" type="submit">Искать</button>

@@ -12,8 +12,9 @@ $opinionsCount = count($user->opinions);
         <div class="user__card">
             <img src="/img/<?= $user->avatar ?>" width="120" height="120" alt="Аватар пользователя">
             <div class="content-view__headline">
-                <h1><?= $user['name'] ?></h1>
-                <p><?= $user->profile[0]->address ?>, <?= SiteHelper::diffInYears($user->profile[0]->date_birthday) ?>
+                <h1><?= $user['username'] ?></h1>
+                <p><?= $user->profile[0]->address ?>
+                    , <?= SiteHelper::dateDifference(time(), $user->profile[0]->date_birthday, '%Y') ?>
                     лет</p>
                 <div class="profile-mini__name five-stars__rate">
                     <?= $user->rate ? Rate::widget(['rate' => $user->rate, 'option' => 'stars-and-rate']) : "" ?>
@@ -91,7 +92,7 @@ $opinionsCount = count($user->opinions);
                             </a>
                             <div class="feedback-card__reviews-content">
                                 <p class="link-name link"><a href="<?= $userUrl ?>"
-                                                             class="link-regular"><?= $opinion->owner->name ?></a>
+                                                             class="link-regular"><?= $opinion->owner->username ?></a>
                                 </p>
                                 <p class="review-text">
                                     <?= $opinion->description ?>

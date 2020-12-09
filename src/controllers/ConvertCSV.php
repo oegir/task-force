@@ -23,7 +23,6 @@ class ConvertCSV
 
         $this->file = new \SplFileObject($csvFile);
         $this->file->setFlags(\SplFileObject::READ_CSV);
-        $this->text = "SET foreign_key_checks = 0;\n";
 
         foreach ($this->file as $row) {
             $text = '';
@@ -44,7 +43,6 @@ class ConvertCSV
 
             $this->text .= $text;
         }
-        $this->text .= "SET foreign_key_checks = 1;";
 
         $this->saveToDir();
     }

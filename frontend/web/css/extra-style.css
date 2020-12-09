@@ -3,3 +3,49 @@
 .four-rate span {
   background-image: url(../img/rate.png);
 }
+
+.registration__user {
+  margin-left: auto;
+}
+
+.lightbulb__pop-up_guest {
+  right: -30px;
+}
+
+.lightbulb__pop-up_guest h3::before,
+.lightbulb__pop-up_guest h3::after {
+  left: 90px;
+}
+
+.registration__user-form .textarea {
+  width: 100%;
+}
+
+.multiple-select {
+  width: 100%;
+}
+
+.form-group.has-error input,
+.form-group.has-error textarea {
+  border-color: #FF116E;
+}
+
+.has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+  color: #FF116E;
+}
+
+.help-block {
+  margin-top: 0;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.search-task__form input[type="search"],
+.search-task__form .form-group {
+  width: 100%;
+}
+
+.search-task__form .form-group{
+  margin-bottom: 0;
+}
+

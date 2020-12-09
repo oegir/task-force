@@ -1,4 +1,3 @@
-SET foreign_key_checks = 0;
 INSERT INTO `city` (id,name,latitude,longitude) VALUES ("1","Казань","55.796289","49.108795");
 INSERT INTO `city` (id,name,latitude,longitude) VALUES ("2","Nong Chik","6.8117856","101.1843887");
 INSERT INTO `city` (id,name,latitude,longitude) VALUES ("3","Kavadarci","41.4410475","22.0126949");
@@ -9,4 +8,3 @@ INSERT INTO `city` (id,name,latitude,longitude) VALUES ("7","Dicun","37.8311926"
 INSERT INTO `city` (id,name,latitude,longitude) VALUES ("8","Kelasuri","43.0225426","41.1157847");
 INSERT INTO `city` (id,name,latitude,longitude) VALUES ("9","Youngstown","41.0699247","-80.6937177");
 INSERT INTO `city` (id,name,latitude,longitude) VALUES ("10","Heidelberg","-26.2396883","28.3217259");
-SET foreign_key_checks = 1;

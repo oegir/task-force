@@ -37,15 +37,15 @@ class TaskModel extends Model
 
         switch ($this->time) {
             case 'month':
-                $date = date('Y-m-d', strtotime('-1 month'));
+                $date = strtotime('-1 month');
                 $searchTask->andWhere(['>=', 'date_add', $date]);
                 break;
             case 'week':
-                $date = date('Y-m-d', strtotime('-1 week'));
+                $date = strtotime("-1 week");
                 $searchTask->andWhere(['>=', 'date_add', $date]);
                 break;
             case 'day':
-                $date = date('Y-m-d', strtotime('-1 day'));
+                $date = strtotime('-1 day');
                 $searchTask->andWhere(['>=', 'date_add', $date]);
                 break;
             case 'all':
