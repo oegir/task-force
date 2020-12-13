@@ -33,7 +33,11 @@ class ConvertCSV
                     if (count($row) !== count($columns)) {
                         throw new FileFormatException("<b>" . $csvFile . "</b>" . " - нет необходимых столбцов," . " строка: " . implode(",", $row));
                     }
-                    $keys[] = "\"$key\"";
+                    if ($key == "null") {
+                        $keys[] = $key;
+                    } else {
+                        $keys[] = "\"$key\"";
+                    }
                 }
             }
 
