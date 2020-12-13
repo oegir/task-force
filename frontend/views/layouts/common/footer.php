@@ -21,15 +21,15 @@ use yii\helpers\Url;
                     <a href="">Задания</a>
                 </li>
                 <? if (!Yii::$app->user->isGuest): ?>
-                <li class="links__item">
-                    <a href="">Мой профиль</a>
-                </li>
+                    <li class="links__item">
+                        <a href="">Мой профиль</a>
+                    </li>
                 <? endif; ?>
                 <li class="links__item">
                     <a href="">Исполнители</a>
                 </li>
                 <li class="links__item">
-                    <a href="<?= Url::to(["/register"])?>">Регистрация</a>
+                    <a href="<?= Url::to(["/register"]) ?>">Регистрация</a>
                 </li>
                 <li class="links__item">
                     <a href="">Создать задание</a>
@@ -47,5 +47,8 @@ use yii\helpers\Url;
                      alt="Логотип HTML Academy">
             </a>
         </div>
+        <?php if (isset($this->blocks['footerAfterCopyright'])): ?>
+            <?= $this->blocks['footerAfterCopyright'] ?>
+        <?php endif; ?>
     </div>
 </footer>
