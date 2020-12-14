@@ -23,7 +23,6 @@ class ConvertCSV
 
         $this->file = new \SplFileObject($csvFile);
         $this->file->setFlags(\SplFileObject::READ_CSV);
-        $this->text = "SET foreign_key_checks = 0;\n";
 
         foreach ($this->file as $row) {
             $text = '';
@@ -34,7 +33,11 @@ class ConvertCSV
                     if (count($row) !== count($columns)) {
                         throw new FileFormatException("<b>" . $csvFile . "</b>" . " - нет необходимых столбцов," . " строка: " . implode(",", $row));
                     }
-                    $keys[] = "\"$key\"";
+                    if ($key == "null") {
+                        $keys[] = $key;
+                    } else {
+                        $keys[] = "\"$key\"";
+                    }
                 }
             }
 
@@ -44,7 +47,6 @@ class ConvertCSV
 
             $this->text .= $text;
         }
-        $this->text .= "SET foreign_key_checks = 1;";
 
         $this->saveToDir();
     }

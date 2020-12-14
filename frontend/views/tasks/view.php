@@ -110,7 +110,7 @@ use yii\helpers\Html;
             <div class="profile-mini__top">
                 <img src="/img/<?= $task->user->avatar ?>" width="62" height="62" alt="Аватар заказчика">
                 <div class="profile-mini__name five-stars__rate">
-                    <p><?= Html::encode($task->user->name); ?></p>
+                    <p><?= Html::encode($task->user->username); ?></p>
                     <?= $task->user->rate ? Rate::widget(['rate' => $task->user->rate, 'option' => 'stars-and-rate']) : "" ?>
                 </div>
             </div>
@@ -121,7 +121,7 @@ use yii\helpers\Html;
                 </span>
                 <? endif; ?>
                 <?
-                $relativeDate = Yii::$app->formatter->asRelativeTime($task->user->date_add);
+                $relativeDate = Yii::$app->formatter->asRelativeTime($task->user->created_at);
                 $date_add = str_replace("назад", "на сайте", $relativeDate);
                 ?>
                 <span class="last"><?= $date_add ?></span></p>

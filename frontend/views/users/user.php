@@ -3,7 +3,7 @@
         <div class="user__card">
             <img src="/img/<?= $user->avatar ?>" width="120" height="120" alt="Аватар пользователя">
             <div class="content-view__headline">
-                <h1><?= $user['name'] ?></h1>
+                <h1><?= $user['username'] ?></h1>
             </div>
             <div class="content-view__headline user__card-bookmark user__card-bookmark--current">
                 <span>Был на сайте <?= Yii::$app->formatter->asRelativeTime($user['date_last']) ?></span>

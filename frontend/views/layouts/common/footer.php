@@ -1,3 +1,8 @@
+<?php
+
+use yii\helpers\Url;
+
+?>
 <footer class="page-footer">
     <div class="main-container page-footer__container">
         <div class="page-footer__info">
@@ -15,14 +20,16 @@
                 <li class="links__item">
                     <a href="">Задания</a>
                 </li>
-                <li class="links__item">
-                    <a href="">Мой профиль</a>
-                </li>
+                <? if (!Yii::$app->user->isGuest): ?>
+                    <li class="links__item">
+                        <a href="">Мой профиль</a>
+                    </li>
+                <? endif; ?>
                 <li class="links__item">
                     <a href="">Исполнители</a>
                 </li>
                 <li class="links__item">
-                    <a href="">Регистрация</a>
+                    <a href="<?= Url::to(["/register"]) ?>">Регистрация</a>
                 </li>
                 <li class="links__item">
                     <a href="">Создать задание</a>
@@ -40,5 +47,8 @@
                      alt="Логотип HTML Academy">
             </a>
         </div>
+        <?php if (isset($this->blocks['footerAfterCopyright'])): ?>
+            <?= $this->blocks['footerAfterCopyright'] ?>
+        <?php endif; ?>
     </div>
 </footer>

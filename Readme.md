@@ -2,7 +2,13 @@
 
 * Студент: [Марат Шаймарданов](https://up.htmlacademy.ru/yii/1/user/31950).
 * Наставник: [Алексей Петров](https://htmlacademy.ru/profile/id1231631).
+---
+**Порядок загрузки базы**
 
+1. Создать базу
+2. Сделать импорт ```task_force_empty.sql```
+3. Применить миграции ```yii migrate```
+4. Загрузить данные из файла ```insert_date.sql```
 ---
 
 **Обратите внимание на файл:**
@@ -13,16 +19,7 @@
 _Не удаляйте и не обращайте внимание на файлы:_<br>
 _`.editorconfig`, `.gitattributes`, `.gitignore`._
 
----
-**пример генерации кода**
 
-```php yii fixture/generate city --count=10 --language=ru_RU```
-
-**Загрузка в базу**
-
-```php yii fixture/load City```
-
----
 Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
 developing complex Web applications with multiple tiers.
 

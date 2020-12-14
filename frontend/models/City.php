@@ -50,12 +50,12 @@ class City extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Profiles]].
+     * Gets query for [[Users]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getProfiles()
+    public function getUsers()
     {
-        return $this->hasMany(Profile::className(), ['city_id' => 'id']);
+        return $this->hasMany(User::className(), ['city_id' => 'id']);
     }
 }

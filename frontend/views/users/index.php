@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
                     <span><?= $opinionsCount ?> <?= SiteHelper::plural($opinionsCount, ['отзыв', 'отзыва', 'отзывов']) ?></span>
                 </div>
                 <div class="feedback-card__top--name user__search-card">
-                    <p class="link-name"><a href="/users/<?= $user['id'] ?>" class="link-regular"><?= $user['name'] ?></a></p>
+                    <p class="link-name"><a href="/users/<?= $user['id'] ?>" class="link-regular"><?= $user['username'] ?></a></p>
                     <?= $user->rate ? Rate::widget(['rate' => $user->rate, 'option' => 'stars-and-rate']) : "" ?>
                     <p class="user__search-content">
                         <?= $user->profile ? $user->profile[0]->about : "" ?>

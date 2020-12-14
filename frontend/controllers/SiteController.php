@@ -6,6 +6,7 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -157,6 +158,9 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
+        $cities = City::find()->all();
+        $cities = ArrayHelper::map($cities,'id','name');
+
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
@@ -164,6 +168,7 @@ class SiteController extends Controller
 
         return $this->render('signup', [
             'model' => $model,
+            'cities' => $cities
         ]);
     }
 
@@ -265,12 +270,7 @@ class SiteController extends Controller
     public function actionTask()
     {
         $this->layout = false;
-        $query = new Query();
-        $query->select(['name'])->from('city')->all();
-        $cities = $query->all();
-        $city = City::findOne(1);
-        $profiles = $city->profiles;
 
-        return $this->render('task', compact('cities', 'profiles'));
+        return $this->render('task');
     }
 }

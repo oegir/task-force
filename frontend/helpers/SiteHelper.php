@@ -26,12 +26,22 @@ class SiteHelper
         return $words[($number % 100 > 4 && $number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][min($number % 10, 5)]];
     }
 
-    public static function diffInYears($date)
+    /**
+     * '%Y years %m months %d days %H hours %i minutes %s seconds'
+     * @param $date1
+     * @param $date2
+     * @param string $differenceFormat
+     * @return string
+     * @throws \Exception
+     */
+    public static function dateDifference($date1, $date2, $differenceFormat = '%a')
     {
-        $now = new DateTime();
-        $date = DateTime::createFromFormat("Y-m-d", $date);
-        $interval = $now->diff($date);
-        return $interval->y;
+        $date1 = date("Y-m-d", $date1);
+        $date1 = new DateTime($date1);
+        $date2 = date("Y-m-d", $date2);
+        $date2 = new DateTime($date2);
+        $interval = $date1->diff($date2);
+        return $interval->format($differenceFormat);
     }
 
 }
