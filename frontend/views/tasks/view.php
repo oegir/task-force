@@ -76,12 +76,12 @@ use yii\helpers\Html;
                         <div class="feedback-card__top">
                             <a href="/users/<?= $response->user['id'] ?>">
                                 <img src="/img/<?= $response->user->avatar ?>"
-                                                                               width="55"
-                                                                               height="55" alt="">
+                                     width="55"
+                                     height="55" alt="">
                             </a>
                             <div class="feedback-card__top--name">
                                 <p><a href="/users/<?= $response->user['id'] ?>"
-                                      class="link-regular"><?= $response->user['name'] ?></a></p>
+                                      class="link-regular"><?= $response->user['username'] ?></a></p>
                                 <?= $response->user->rate ? Rate::widget(['rate' => $response->user->rate, 'option' => 'stars-and-rate']) : "" ?>
                             </div>
                             <span
@@ -125,13 +125,7 @@ use yii\helpers\Html;
                 $date_add = str_replace("назад", "на сайте", $relativeDate);
                 ?>
                 <span class="last"><?= $date_add ?></span></p>
-            <?
-            $userUrl = "/users/user/" . $task->user->id;
-            if ($task->user->profile) {
-                $userUrl = "/users/" . $task->user->id;
-            }
-            ?>
-            <a href="<?= $userUrl ?>" class="link-regular">Смотреть профиль</a>
+            <a href="<?= SiteHelper::getUserUrl($task->user) ?>" class="link-regular">Смотреть профиль</a>
         </div>
     </div>
     <div class="connect-desk__chat">

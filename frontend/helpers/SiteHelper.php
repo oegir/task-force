@@ -44,4 +44,13 @@ class SiteHelper
         return $interval->format($differenceFormat);
     }
 
+    public static function getUserUrl($user){
+        $userUrl = "/users/user/" . $user->id;
+        if (isset($user->profile)) {
+            $userUrl = "/users/" . $user->id;
+        }
+
+        return $userUrl;
+    }
+
 }

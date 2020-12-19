@@ -4,11 +4,11 @@
   background-image: url(../img/rate.png);
 }
 
-.clipart-woman{
+.clipart-woman {
   height: 454px;
 }
 
-.lightbulb__pop-up_guest {
+.lightbulb__pop-up {
   right: -30px;
 }
 
@@ -45,7 +45,56 @@
   width: 100%;
 }
 
-.search-task__form .form-group{
+.search-task__form .form-group {
   margin-bottom: 0;
 }
 
+.landing-top {
+  width: 100%;
+  max-width: 1010px;
+}
+
+.enter-form {
+  bottom: auto;
+}
+
+.form-modal {
+  width: 340px;
+}
+
+.form-modal .form-group {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.form-modal .help-block {
+  position: absolute;
+  bottom: 10px;
+}
+
+.form-modal .form-modal-description {
+  display: block;
+}
+
+.form-modal .input-middle {
+  width: 100%;
+}
+
+.main-container.page-header__container.page-header__container--index .header__account {
+  margin-left: 325px;
+}
+
+.account__pop-up-list button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  color: #1e90ff;
+}
+
+.landing-top a:hover {
+  text-decoration: none;
+}
+
+.header__account--index a:hover {
+  text-decoration: underline;
+}

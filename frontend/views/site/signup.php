@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->
             field($model, 'password_hash')->
-            textInput(['class' => "input textarea"])->
+            passwordInput(['class' => "input textarea"])->
             label('Пароль') ?>
 
             <div class="form-group">

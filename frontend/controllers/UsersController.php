@@ -4,13 +4,12 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\NotFoundHttpException;
-use yii\web\Controller;
 
 use frontend\models\Category;
 use frontend\models\UserModel;
 use frontend\models\User;
 
-class UsersController extends Controller
+class UsersController extends SecuredController
 {
     public function actionIndex()
     {
