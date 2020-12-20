@@ -42,6 +42,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/' => 'site/index',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '/task' => 'site/task',
                 'tasks/<id:\d+>'   => 'tasks/view',
                 'users/<id:\d+>'   => 'users/view',

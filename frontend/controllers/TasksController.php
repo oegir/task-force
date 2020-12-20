@@ -2,15 +2,12 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Response;
 use yii\web\NotFoundHttpException;
-use yii\web\Controller;
 use frontend\models\Category;
 use frontend\models\TaskModel;
 use frontend\models\Task;
-use frontend\models\User;
 
-class TasksController extends Controller
+class TasksController extends SecuredController
 {
     public function actionIndex()
     {

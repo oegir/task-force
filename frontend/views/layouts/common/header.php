@@ -1,7 +1,20 @@
+<?
+
+use frontend\helpers\SiteHelper;
+use yii\helpers\Html;
+use yii\helpers\Url;
+
+$user = "";
+if (!Yii::$app->user->isGuest) {
+    $user = \Yii::$app->user->identity;
+}
+//debug($user,1);
+?>
+
 <header class="page-header">
     <div class="main-container page-header__container">
         <div class="page-header__logo">
-            <a href="index.html">
+            <a href="/">
                 <svg class="page-header__logo-image" id="Layer_2" xmlns="http://www.w3.org/2000/svg"
                      viewBox="0 0 1634 646.35">
                     <title>taskforce_logo2-01</title>
@@ -65,26 +78,24 @@
                 <li class="site-list__item">
                     <a href="#">Создать задание</a>
                 </li>
-                <? if (!Yii::$app->user->isGuest): ?>
+                <? if ($user): ?>
                     <li class="site-list__item">
-                        <a>Мой профиль</a>
+                        <a href="<?= SiteHelper::getUserUrl($user) ?>">Мой профиль</a>
                     </li>
                 <? endif; ?>
             </ul>
         </div>
-        <? if (!Yii::$app->user->isGuest): ?>
-            <div class="header__town">
-                <select class="multiple-select input town-select" size="1" name="town[]">
-                    <option value="Moscow">Москва</option>
-                    <option selected value="SPB">Санкт-Петербург</option>
-                    <option value="Krasnodar">Краснодар</option>
-                    <option value="Irkutsk">Иркутск</option>
-                    <option value="Vladivostok">Владивосток</option>
-                </select>
-            </div>
-        <? endif; ?>
+        <div class="header__town">
+            <select class="multiple-select input town-select" size="1" name="town[]">
+                <option value="Moscow">Москва</option>
+                <option selected value="SPB">Санкт-Петербург</option>
+                <option value="Krasnodar">Краснодар</option>
+                <option value="Irkutsk">Иркутск</option>
+                <option value="Vladivostok">Владивосток</option>
+            </select>
+        </div>
         <div class="header__lightbulb"></div>
-        <div class="lightbulb__pop-up<?= (Yii::$app->user->isGuest) ? " lightbulb__pop-up_guest" : "" ?>">
+        <div class="lightbulb__pop-up">
             <h3>Новые события</h3>
             <p class="lightbulb__new-task lightbulb__new-task--message">
             <p class="lightbulb__new-task lightbulb__new-task--message">
@@ -100,15 +111,15 @@
                 <a href="#" class="link-regular">«Помочь с курсовой»</a>
             </p>
         </div>
-        <? if (!Yii::$app->user->isGuest): ?>
+        <? if ($user): ?>
             <div class="header__account">
                 <a class="header__account-photo">
-                    <img src="/img/user-photo.png"
+                    <img src="/img/<?= $user->avatar ?>"
                          width="43" height="44"
                          alt="Аватар пользователя">
                 </a>
                 <span class="header__account-name">
-                 Василий
+                 <?= $user->username ?>
                 </span>
             </div>
             <div class="account__pop-up">
@@ -120,7 +131,10 @@
                         <a href="#">Настройки</a>
                     </li>
                     <li>
-                        <a href="#">Выход</a>
+                        <form action="<?= Url::to(["/site/logout"]) ?>" method="post">
+                            <button type="submit">Выход</button>
+                            <?= Html:: hiddenInput(Yii:: $app->getRequest()->csrfParam, Yii:: $app->getRequest()->getCsrfToken(), []); ?>
+                        </form>
                     </li>
                 </ul>
             </div>

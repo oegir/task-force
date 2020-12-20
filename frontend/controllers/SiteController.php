@@ -6,9 +6,9 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
@@ -16,14 +16,13 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
-use yii\db\Query;
 use frontend\models\City;
 
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends SecuredController
 {
     /**
      * {@inheritdoc}
@@ -33,10 +32,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', "index"],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'index'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -45,6 +44,15 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => false,
+                        'roles' => ['@'],
+                        'denyCallback' => function ($rule, $action) {
+                            return $action->controller->redirect('/tasks');
+                        },
+                    ]
+
                 ],
             ],
             'verbs' => [
@@ -79,6 +87,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'landing';
         return $this->render('index');
     }
 
@@ -94,8 +103,12 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
+        if (\Yii::$app->request->isAjax && $model->load(\Yii::$app->request->post())) {
+            $data = ActiveForm::validate($model);
+            return json_encode($data);
+        }
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect("/tasks");
         } else {
             $model->password = '';
 
@@ -104,6 +117,8 @@ class SiteController extends Controller
             ]);
         }
     }
+
+
 
     /**
      * Logs out the current user.
@@ -159,7 +174,7 @@ class SiteController extends Controller
     {
         $model = new SignupForm();
         $cities = City::find()->all();
-        $cities = ArrayHelper::map($cities,'id','name');
+        $cities = ArrayHelper::map($cities, 'id', 'name');
 
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
