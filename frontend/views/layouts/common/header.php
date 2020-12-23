@@ -67,51 +67,53 @@ if (!Yii::$app->user->isGuest) {
                 </svg>
             </a>
         </div>
-        <div class="header__nav">
-            <ul class="header-nav__list site-list">
-                <li class="site-list__item">
-                    <a href="/tasks">Задания</a>
-                </li>
-                <li class="site-list__item">
-                    <a href="/users">Исполнители</a>
-                </li>
-                <li class="site-list__item">
-                    <a href="#">Создать задание</a>
-                </li>
-                <? if ($user): ?>
+        <? if ($user): ?>
+            <div class="header__nav">
+                <ul class="header-nav__list site-list">
+                    <li class="site-list__item">
+                        <a href="/tasks">Задания</a>
+                    </li>
+                    <li class="site-list__item">
+                        <a href="/users">Исполнители</a>
+                    </li>
+                    <? if ($user->role == "owner"): ?>
+                        <li class="site-list__item">
+                            <a href="/tasks/create">Создать задание</a>
+                        </li>
+                    <? endif; ?>
+
                     <li class="site-list__item">
                         <a href="<?= SiteHelper::getUserUrl($user) ?>">Мой профиль</a>
                     </li>
-                <? endif; ?>
-            </ul>
-        </div>
-        <div class="header__town">
-            <select class="multiple-select input town-select" size="1" name="town[]">
-                <option value="Moscow">Москва</option>
-                <option selected value="SPB">Санкт-Петербург</option>
-                <option value="Krasnodar">Краснодар</option>
-                <option value="Irkutsk">Иркутск</option>
-                <option value="Vladivostok">Владивосток</option>
-            </select>
-        </div>
-        <div class="header__lightbulb"></div>
-        <div class="lightbulb__pop-up">
-            <h3>Новые события</h3>
-            <p class="lightbulb__new-task lightbulb__new-task--message">
-            <p class="lightbulb__new-task lightbulb__new-task--message">
-                Новое сообщение в чате
-                <a href="#" class="link-regular">«Помочь с курсовой»</a>
-            </p>
-            <p class="lightbulb__new-task lightbulb__new-task--executor">
-                Выбран исполнитель для
-                <a href="#" class="link-regular">«Помочь с курсовой»</a>
-            </p>
-            <p class="lightbulb__new-task lightbulb__new-task--close">
-                Завершено задание
-                <a href="#" class="link-regular">«Помочь с курсовой»</a>
-            </p>
-        </div>
-        <? if ($user): ?>
+
+                </ul>
+            </div>
+            <div class="header__town">
+                <select class="multiple-select input town-select" size="1" name="town[]">
+                    <option value="Moscow">Москва</option>
+                    <option selected value="SPB">Санкт-Петербург</option>
+                    <option value="Krasnodar">Краснодар</option>
+                    <option value="Irkutsk">Иркутск</option>
+                    <option value="Vladivostok">Владивосток</option>
+                </select>
+            </div>
+            <div class="header__lightbulb"></div>
+            <div class="lightbulb__pop-up">
+                <h3>Новые события</h3>
+                <p class="lightbulb__new-task lightbulb__new-task--message">
+                <p class="lightbulb__new-task lightbulb__new-task--message">
+                    Новое сообщение в чате
+                    <a href="#" class="link-regular">«Помочь с курсовой»</a>
+                </p>
+                <p class="lightbulb__new-task lightbulb__new-task--executor">
+                    Выбран исполнитель для
+                    <a href="#" class="link-regular">«Помочь с курсовой»</a>
+                </p>
+                <p class="lightbulb__new-task lightbulb__new-task--close">
+                    Завершено задание
+                    <a href="#" class="link-regular">«Помочь с курсовой»</a>
+                </p>
+            </div>
             <div class="header__account">
                 <a class="header__account-photo">
                     <img src="/img/<?= $user->avatar ?>"

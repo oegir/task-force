@@ -5,6 +5,8 @@ use frontend\widgets\Rate;
 use yii\helpers\Html;
 
 /** @var $task */
+$this->title = 'TaskForce | ' . $task['name'];
+
 ?>
 
 <section class="content-view">

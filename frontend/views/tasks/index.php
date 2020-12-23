@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 /** @var $categories */
 /** @var $model */
 
+$this->title = 'TaskForce | Список задач';
+
 ?>
 
 <section class="new-task">
