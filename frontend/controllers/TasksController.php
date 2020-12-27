@@ -2,17 +2,33 @@
 
 namespace frontend\controllers;
 
-use frontend\models\TaskForm;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\web\UploadedFile;
 use yii\web\NotFoundHttpException;
 use frontend\models\Category;
 use frontend\models\TaskModel;
 use frontend\models\Task;
-use yii\web\UploadedFile;
+use frontend\models\TaskForm;
 
 class TasksController extends SecuredController
 {
+    public function behaviors()
+    {
+        $rules = parent::behaviors();
+        $rule = [
+            'allow' => false,
+            'actions' => ['create'],
+            'matchCallback' => function () {
+                return Yii::$app->user->identity->role !== "owner";
+            }
+        ];
+
+        array_unshift($rules['access']['rules'], $rule);
+
+        return $rules;
+    }
+
     public function actionIndex()
     {
         $categories = Category::find()->indexBy('id')->all();
