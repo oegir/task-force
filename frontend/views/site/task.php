@@ -11,7 +11,7 @@ $baseDir = $path . "/data";
 try {
     $category = new ConvertCSV($baseDir . "/category.csv", ['id', 'name', 'slug']);
     $city = new ConvertCSV($baseDir . "/city.csv", ['id', 'name', 'latitude', 'longitude']);
-    $user = new ConvertCSV($baseDir . "/user.csv", ['id', 'username', 'email', 'password_hash', 'date_last', 'created_at', 'avatar', 'city_id', "auth_key", "verification_token", "status", "updated_at", "role"]);
+    $user = new ConvertCSV($baseDir . "/user.csv", ['id', 'username', 'email', 'password_hash', 'date_last', 'created_at', 'avatar', 'city_id', "auth_key", "verification_token", "status", "updated_at"]);
     $profile = new ConvertCSV($baseDir . "/profile.csv", ['id', 'address', 'about', 'date_birthday', 'phone', 'skype', 'telegram', 'popular', 'online', 'favorite']);
     $message = new ConvertCSV($baseDir . "/message.csv", ['id', 'date_add', 'description', 'worker_id', 'owner_id']);
     $opinion = new ConvertCSV($baseDir . "/opinion.csv", ['id', 'date_add', 'rate', 'description', 'owner_id', 'worker_id', 'task_id']);
