@@ -38,7 +38,7 @@ $this->title = 'TaskForce | ' . $task['name'];
                 <div class="content-view__attach">
                     <h3 class="content-view__h3">Вложения</h3>
                     <? foreach ($task->files as $file): ?>
-                        <a href="/files/<?= $file['file'] ?>"><?= $file['file'] ?></a>
+                        <a target="_blank" href="/uploads/<?= $file['file'] ?>"><?= $file['file'] ?></a>
                     <? endforeach; ?>
                 </div>
             <? endif; ?>

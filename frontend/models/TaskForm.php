@@ -61,13 +61,11 @@ class TaskForm extends Model
 
     public function upload()
     {
-        if ($this->validate()) {
-            foreach ($this->file as $file) {
-                $file->saveAs('uploads/' . $file->baseName . '.' . $file->extension);
-            }
-            return true;
-        } else {
-            return false;
+        foreach ($this->file as $file) {
+            $filename = uniqid() . "-" . time();
+            $file->name = $filename . "." . $file->extension;
+            $file->saveAs('uploads/' . $filename . '.' . $file->extension);
         }
+        return true;
     }
 }
