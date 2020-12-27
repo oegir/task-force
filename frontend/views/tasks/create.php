@@ -46,7 +46,7 @@ $names = [
                 <span>Добавить новый файл</span>
                 {input}
             </label>'
-                ])->fileInput(['class' => 'sr-only', 'multiple' => true])->label(false) ?>
+                ])->fileInput(['class' => 'sr-only dropzone', 'multiple' => true])->label(false) ?>
             <label for="13">Локация</label>
             <input class="input-navigation input-middle input" id="13" type="search" name="q"
                    placeholder="Санкт-Петербург, Калининский район">
@@ -99,3 +99,6 @@ $names = [
     <button form="task-form" class="button" type="submit">Опубликовать</button>
     <?php ActiveForm::end(); ?>
 </section>
+<?//= $this->registerJsFile("/js/initDropzone.js", ['depends' => [
+//    'frontend\assets\AppAsset'
+//]]); ?>
