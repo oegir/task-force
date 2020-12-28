@@ -59,12 +59,16 @@ class TaskForm extends Model
         $taskCategory->saveTaskCategory($task, $this->category);
     }
 
-    public function upload()
+    /**
+     * @param string $path
+     * @return bool
+     */
+    public function upload(string $path): bool
     {
         foreach ($this->file as $file) {
             $filename = uniqid() . "-" . time();
             $file->name = $filename . "." . $file->extension;
-            $file->saveAs('uploads/' . $filename . '.' . $file->extension);
+            $file->saveAs($path . '/' . $filename . '.' . $file->extension);
         }
         return true;
     }

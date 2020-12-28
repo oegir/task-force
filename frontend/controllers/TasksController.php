@@ -59,12 +59,14 @@ class TasksController extends SecuredController
         $model = new TaskForm();
         $categories = Category::find()->indexBy('id')->all();
         $categories = ArrayHelper::map($categories, 'id', 'name');
+        
         if ($model->load(Yii::$app->request->post())) {
             $model->file = UploadedFile::getInstances($model, 'file');
-            $model->upload();
-
+            
             if ($model->validate()) {
+                $model->upload(Yii::$app->params['taskImagesPath']);
                 $model->saveForm();
+                
                 return $this->redirect('/tasks');
             }
         }

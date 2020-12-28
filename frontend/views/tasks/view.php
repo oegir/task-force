@@ -3,6 +3,7 @@
 use frontend\helpers\SiteHelper;
 use frontend\widgets\Rate;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var $task */
 $this->title = 'TaskForce | ' . $task['name'];
@@ -38,7 +39,10 @@ $this->title = 'TaskForce | ' . $task['name'];
                 <div class="content-view__attach">
                     <h3 class="content-view__h3">Вложения</h3>
                     <? foreach ($task->files as $file): ?>
-                        <a target="_blank" href="/uploads/<?= $file['file'] ?>"><?= $file['file'] ?></a>
+                        <a target="_blank" href="<?= 
+                        // Для генерации корректных url следует использовать Url-хелпер
+                        Url::to([Yii::$app->params['taskImagesPath'] . '/' . $file['file']])
+                        ?>"><?= $file['file'] ?></a>
                     <? endforeach; ?>
                 </div>
             <? endif; ?>
