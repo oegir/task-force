@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use Yii;
 
 /**
  * This is the model class for table "task".
@@ -21,6 +20,7 @@ use Yii;
  */
 class Task extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +35,7 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'date_add', 'date_expire', 'price', 'address', 'latitude', 'longitude'], 'required'],
+            [['name', 'description'], 'required'],
             [['description', 'address'], 'string'],
             [['date_add', 'date_expire'], 'safe'],
             [['price'], 'integer'],
@@ -71,7 +71,7 @@ class Task extends \yii\db\ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(Category::className(), ['id' => 'category_id'])->
-        viaTable("task_category",['task_id'=>'id']);
+        viaTable("task_category", ['task_id' => 'id']);
     }
 
     /**

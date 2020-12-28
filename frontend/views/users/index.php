@@ -8,6 +8,8 @@ use yii\widgets\ActiveForm;
 /** @var $categories */
 /** @var $model */
 
+$this->title = 'TaskForce | Список исполнителей';
+
 ?>
 <section class="user__search">
     <div class="user__search-link">

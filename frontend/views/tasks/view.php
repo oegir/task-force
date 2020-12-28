@@ -5,6 +5,8 @@ use frontend\widgets\Rate;
 use yii\helpers\Html;
 
 /** @var $task */
+$this->title = 'TaskForce | ' . $task['name'];
+
 ?>
 
 <section class="content-view">
@@ -36,7 +38,7 @@ use yii\helpers\Html;
                 <div class="content-view__attach">
                     <h3 class="content-view__h3">Вложения</h3>
                     <? foreach ($task->files as $file): ?>
-                        <a href="/files/<?= $file['file'] ?>"><?= $file['file'] ?></a>
+                        <a target="_blank" href="/uploads/<?= $file['file'] ?>"><?= $file['file'] ?></a>
                     <? endforeach; ?>
                 </div>
             <? endif; ?>

@@ -1,3 +1,6 @@
+<?
+$this->title = 'TaskForce | ' . $user['username'];
+?>
 <section class="content-view">
     <div class="user__card-wrapper">
         <div class="user__card">

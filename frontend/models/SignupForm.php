@@ -16,7 +16,6 @@ class SignupForm extends Model
     public $password_hash;
     public $city_id;
 
-
     /**
      * {@inheritdoc}
      */
@@ -60,11 +59,11 @@ class SignupForm extends Model
         $user->email = $this->email;
         $user->city_id = $this->city_id;
         $user->avatar = "camera.png";
+        $user->role = "owner";
         $user->setPassword($this->password_hash);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
         return $user->save() && $this->sendEmail($user);
-
     }
 
     /**

@@ -17,9 +17,9 @@ class AppAsset extends AssetBundle
         'css/extra-style.css',
     ];
     public $js = [
-        'js/dropzone.js',
         'js/main.js',
         'js/messenger.js',
+//        'js/dropzone.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

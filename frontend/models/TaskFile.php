@@ -43,4 +43,12 @@ class TaskFile extends \yii\db\ActiveRecord
             'file' => 'File',
         ];
     }
+
+    public function saveTaskFile($task, $file)
+    {
+        $task_file = new TaskFile();
+        $task_file->task_id = $task->id;
+        $task_file->file = $file->name;
+        $task_file->save();
+    }
 }

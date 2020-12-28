@@ -6,6 +6,7 @@ use frontend\widgets\Rate;
 $tasksCount = count($user->tasks);
 $opinionsCount = count($user->opinions);
 
+$this->title = 'TaskForce | ' .  $user['username'];
 ?>
 <section class="content-view">
     <div class="user__card-wrapper">
