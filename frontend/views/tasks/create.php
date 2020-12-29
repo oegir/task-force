@@ -5,6 +5,9 @@
 /** @var $errors */
 
 use yii\bootstrap\ActiveForm;
+use frontend\assets\TaskCreateAsset;
+
+TaskCreateAsset::register($this);
 
 $this->title = 'TaskForce | Создать задачу';
 $names = [
@@ -40,13 +43,7 @@ $names = [
             <span>Выберите категорию</span>
             <label>Файлы</label>
             <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
-            <?= $form->field($model, 'file[]',
-                [
-                    'template' => ' <label class="create__file">
-                <span>Добавить новый файл</span>
-                {input}
-            </label>'
-                ])->fileInput(['class' => 'sr-only dropzone', 'multiple' => true])->label(false) ?>
+            <div class="create__file"></div>
             <label for="13">Локация</label>
             <input class="input-navigation input-middle input" id="13" type="search" name="q"
                    placeholder="Санкт-Петербург, Калининский район">
@@ -96,9 +93,7 @@ $names = [
             <? endif; ?>
         </div>
     </div>
-    <button form="task-form" class="button" type="submit">Опубликовать</button>
+    <button form="task-form" class="button" type="submit" id="submit-btn">Опубликовать</button>
     <?php ActiveForm::end(); ?>
 </section>
-<?//= $this->registerJsFile("/js/initDropzone.js", ['depends' => [
-//    'frontend\assets\AppAsset'
-//]]); ?>
+
