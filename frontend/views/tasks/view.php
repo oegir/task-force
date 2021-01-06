@@ -1,12 +1,14 @@
 <?php
 
 use frontend\helpers\SiteHelper;
+use frontend\widgets\Modal;
 use frontend\widgets\Rate;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
 /** @var $task */
 $this->title = 'TaskForce | ' . $task['name'];
+$user = \Yii::$app->user->identity;
 
 ?>
 
@@ -39,7 +41,8 @@ $this->title = 'TaskForce | ' . $task['name'];
                 <div class="content-view__attach">
                     <h3 class="content-view__h3">Вложения</h3>
                     <? foreach ($task->files as $file): ?>
-                        <a target="_blank" href="<?= Url::to([Yii::$app->params['taskImagesPath'] . '/' . $file['file']]) ?>">
+                        <a target="_blank"
+                           href="<?= Url::to([Yii::$app->params['taskImagesPath'] . '/' . $file['file']]) ?>">
                             <?= $file['file'] ?>
                         </a>
                     <? endforeach; ?>
@@ -61,18 +64,31 @@ $this->title = 'TaskForce | ' . $task['name'];
             </div>
         </div>
         <div class="content-view__action-buttons">
-            <button class=" button button__big-color response-button open-modal"
-                    type="button" data-for="response-form">Откликнуться
-            </button>
-            <button class="button button__big-color refusal-button open-modal"
-                    type="button" data-for="refuse-form">Отказаться
-            </button>
-            <button class="button button__big-color request-button open-modal"
-                    type="button" data-for="complete-form">Завершить
-            </button>
+            <?
+            $userHasResponse = false;
+            foreach ($task->response as $response) {
+                if ($user->id == $response->user['id'] && $task->id == $response->task_id) {
+                    $userHasResponse = true;
+                }
+            } ?>
+            <? if ($task->status != 'complete'): ?>
+                <? if ($task->status != 'in work' && !$userHasResponse): ?>
+                    <button class=" button button__big-color response-button open-modal"
+                            type="button" data-for="response-form">Откликнуться
+                    </button>
+                <? elseif ($task->status == 'in work' && $user->id == $task->user->user_id): ?>
+                    <button class="button button__big-color refusal-button open-modal"
+                            type="button" data-for="refuse-form">Отказаться
+                    </button>
+                <? elseif ($user->id == $task->owner->id): ?>
+                    <button class="button button__big-color request-button open-modal"
+                            type="button" data-for="complete-form">Завершить
+                    </button>
+                <? endif; ?>
+            <? endif; ?>
         </div>
     </div>
-    <? if ($task->response): ?>
+    <? if ($task->response && $user->id == $task->owner->id): ?>
         <div class="content-view__feedback">
             <h2>Отклики <span>(<?= count($task->response) ?>)</span></h2>
             <div class="content-view__feedback-wrapper">
@@ -96,12 +112,16 @@ $this->title = 'TaskForce | ' . $task['name'];
                             <p><?= $response['description'] ?></p>
                             <span><?= $response['price'] ?> ₽</span>
                         </div>
-                        <div class="feedback-card__actions">
-                            <a class="button__small-color request-button button"
-                               type="button">Подтвердить</a>
-                            <a class="button__small-color refusal-button button"
-                               type="button">Отказать</a>
-                        </div>
+                        <? if ($response['status'] != 'reject' && $task->status != 'in work' && $task->status != 'complete' ): ?>
+                            <div class="feedback-card__actions">
+                                <a href="<?= Url::to(['/tasks/response-apply', 'taskId' => $task->id, 'responseId' => $response->id, 'userId' => $response->user->id]) ?>"
+                                   class="button__small-color request-button button"
+                                   type="button">Подтвердить</a>
+                                <a href="<?= Url::to(['/tasks/response-reject', 'id' => $response->id]) ?>"
+                                   class="button__small-color refusal-button button"
+                                   type="button">Отказать</a>
+                            </div>
+                        <? endif; ?>
                     </div>
                 <? endforeach; ?>
             </div>
@@ -113,24 +133,24 @@ $this->title = 'TaskForce | ' . $task['name'];
         <div class="profile-mini__wrapper">
             <h3>Заказчик</h3>
             <div class="profile-mini__top">
-                <img src="/img/<?= $task->user->avatar ?>" width="62" height="62" alt="Аватар заказчика">
+                <img src="/img/<?= $task->owner->avatar ?>" width="62" height="62" alt="Аватар заказчика">
                 <div class="profile-mini__name five-stars__rate">
-                    <p><?= Html::encode($task->user->username); ?></p>
-                    <?= $task->user->rate ? Rate::widget(['rate' => $task->user->rate, 'option' => 'stars-and-rate']) : "" ?>
+                    <p><?= Html::encode($task->owner->username); ?></p>
+                    <?= $task->owner->rate ? Rate::widget(['rate' => $task->owner->rate, 'option' => 'stars-and-rate']) : "" ?>
                 </div>
             </div>
             <p class="info-customer">
-                <? if (count($task->user->userTasks)): ?>
+                <? if (count($task->owner->userTasks)): ?>
                     <span>
-                    <?= count($task->user->userTasks) . " " . SiteHelper::plural(count($task->user->userTasks), ['заказ', 'заказа', 'заказов']) ?>
+                    <?= count($task->owner->userTasks) . " " . SiteHelper::plural(count($task->owner->userTasks), ['заказ', 'заказа', 'заказов']) ?>
                 </span>
                 <? endif; ?>
                 <?
-                $relativeDate = Yii::$app->formatter->asRelativeTime($task->user->created_at);
+                $relativeDate = Yii::$app->formatter->asRelativeTime($task->owner->created_at);
                 $date_add = str_replace("назад", "на сайте", $relativeDate);
                 ?>
                 <span class="last"><?= $date_add ?></span></p>
-            <a href="<?= SiteHelper::getUserUrl($task->user) ?>" class="link-regular">Смотреть профиль</a>
+            <a href="<?= SiteHelper::getUserUrl($task->owner) ?>" class="link-regular">Смотреть профиль</a>
         </div>
     </div>
     <div class="connect-desk__chat">
@@ -159,3 +179,6 @@ $this->title = 'TaskForce | ' . $task['name'];
         </form>
     </div>
 </section>
+<?= Modal::widget(['type' => 'task-reject', 'task' => $task]) ?>
+<?= Modal::widget(['type' => 'task-cancel', 'task' => $task]) ?>
+<?= Modal::widget(['type' => 'task-response', 'task' => $task]) ?>

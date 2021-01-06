@@ -8,7 +8,6 @@ $user = "";
 if (!Yii::$app->user->isGuest) {
     $user = \Yii::$app->user->identity;
 }
-//debug($user,1);
 ?>
 
 <header class="page-header">

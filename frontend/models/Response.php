@@ -9,10 +9,11 @@ use Yii;
  *
  * @property int $id
  * @property int $task_id
- * @property int $worker_id
+ * @property int $user_id
  * @property string $date_add
  * @property int $price
  * @property string|null $description
+ * @property string|null $status
  *
  * @property Task $task
  * @property Profile $worker
@@ -33,12 +34,13 @@ class Response extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'worker_id', 'date_add', 'price'], 'required'],
-            [['task_id', 'worker_id', 'price'], 'integer'],
+            [['task_id', 'user_id', 'date_add', 'price'], 'required'],
+            [['task_id', 'user_id', 'price'], 'integer'],
             [['date_add'], 'safe'],
             [['description'], 'string'],
+            [['status'], 'string'],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
-            [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['worker_id' => 'id']],
+            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Profile::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -50,10 +52,11 @@ class Response extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'task_id' => 'Task ID',
-            'worker_id' => 'Worker ID',
+            'user_id' => 'User ID',
             'date_add' => 'Date Add',
             'price' => 'Price',
             'description' => 'Description',
+            'status' => 'Status',
         ];
     }
 
