@@ -61,7 +61,7 @@ class TasksController extends SecuredController
 
     public function actionCreate()
     {
-        $model = new TaskForm();
+        $model = Yii::$container->get(TaskForm::class);
         $categories = Category::find()->indexBy('id')->all();
         $categories = ArrayHelper::map($categories, 'id', 'name');
         if ($model->load(Yii::$app->request->post())) {
