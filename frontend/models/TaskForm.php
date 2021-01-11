@@ -15,14 +15,6 @@ class TaskForm extends Model
     public $date_expire;
     public $file;
 
-    private $userTask;
-
-    public function __construct(array $config = [], UserTask $userTask)
-    {
-        $this->userTask = $userTask;
-        parent::__construct($config);
-    }
-
     public static function tableName()
     {
         return 'task';
@@ -60,10 +52,6 @@ class TaskForm extends Model
         $task->owner_id = Yii::$app->user->id;
         $task->status = 'new';
         $task->save();
-
-        $this->userTask->link('task', $task);
-        $this->userTask->user_id = Yii::$app->user->id;
-        $this->userTask->save();
 
         foreach ($this->file as $file) {
             $taskFile = new TaskFile();

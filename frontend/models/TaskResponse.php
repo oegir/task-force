@@ -3,6 +3,7 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 
 class TaskResponse extends Model
@@ -36,10 +37,6 @@ class TaskResponse extends Model
 
     public function saveForm($id)
     {
-        $task = Task::findOne($id);
-        $task->status = "in work";
-        $task->save();
-
         $response = new Response();
         $response->price = $this->price;
         $response->description = $this->text;

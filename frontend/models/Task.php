@@ -21,7 +21,6 @@ namespace frontend\models;
  */
 class Task extends \yii\db\ActiveRecord
 {
-
     /**
      * {@inheritdoc}
      */
@@ -37,7 +36,7 @@ class Task extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'description'], 'required'],
-            [['description', 'address','status'], 'string'],
+            [['description', 'address', 'status'], 'string'],
             [['date_add', 'date_expire'], 'safe'],
             [['price'], 'integer'],
             [['latitude', 'longitude'], 'number'],
@@ -115,4 +114,5 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->hasOne(UserTask::className(), ['task_id' => 'id']);
     }
+
 }
