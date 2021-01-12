@@ -6,13 +6,13 @@ use yii\helpers\Url;
 use frontend\helpers\SiteHelper;
 use frontend\widgets\Modal;
 use frontend\widgets\Rate;
-use frontend\controllers\CheckController;
 
 /** @var $task */
+/** @var $check */
+
 $this->title = 'TaskForce | ' . $task['name'];
 $user = \Yii::$app->user->identity;
 
-$check = new CheckController($user, $task);
 ?>
 
 <section class="content-view">
@@ -82,43 +82,47 @@ $check = new CheckController($user, $task);
             <? endif; ?>
         </div>
     </div>
-    <div class="content-view__feedback">
-        <h2>Отклики <span>(<?= count($task->response) ?>)</span></h2>
-        <div class="content-view__feedback-wrapper">
-            <? foreach ($task->response as $response): ?>
-                <div class="content-view__feedback-card">
-                    <div class="feedback-card__top">
-                        <a href="/users/<?= $response->user['id'] ?>">
-                            <img src="/img/<?= $response->user->avatar ?>"
-                                 width="55"
-                                 height="55" alt="">
-                        </a>
-                        <div class="feedback-card__top--name">
-                            <p><a href="/users/<?= $response->user['id'] ?>"
-                                  class="link-regular"><?= $response->user['username'] ?></a></p>
-                            <?= $response->user->rate ? Rate::widget(['rate' => $response->user->rate, 'option' => 'stars-and-rate']) : "" ?>
-                        </div>
-                        <span
-                            class="new-task__time"><?= Yii::$app->formatter->asRelativeTime($response['date_add']) ?></span>
-                    </div>
-                    <div class="feedback-card__content">
-                        <p><?= $response['description'] ?></p>
-                        <span><?= $response['price'] ?> ₽</span>
-                    </div>
-                    <? if ($check->isShowResponses($response)) : ?>
-                        <div class="feedback-card__actions">
-                            <a href="<?= Url::to(['/tasks/response-apply', 'taskId' => $task->id, 'responseId' => $response->id, 'userId' => $response->user->id]) ?>"
-                               class="button__small-color request-button button"
-                               type="button">Подтвердить</a>
-                            <a href="<?= Url::to(['/tasks/response-reject', 'id' => $response->id]) ?>"
-                               class="button__small-color refusal-button button"
-                               type="button">Отказать</a>
+    <? if ($check->isShowResponses()): ?>
+        <div class="content-view__feedback">
+            <h2>Отклики <span>(<?= $check->countResponses() ?>)</span></h2>
+            <div class="content-view__feedback-wrapper">
+                <? foreach ($task->response as $response): ?>
+                    <? if ($check->isShowResponse($response)): ?>
+                        <div class="content-view__feedback-card">
+                            <div class="feedback-card__top">
+                                <a href="/users/<?= $response->user['id'] ?>">
+                                    <img src="/img/<?= $response->user->avatar ?>"
+                                         width="55"
+                                         height="55" alt="">
+                                </a>
+                                <div class="feedback-card__top--name">
+                                    <p><a href="/users/<?= $response->user['id'] ?>"
+                                          class="link-regular"><?= $response->user['username'] ?></a></p>
+                                    <?= $response->user->rate ? Rate::widget(['rate' => $response->user->rate, 'option' => 'stars-and-rate']) : "" ?>
+                                </div>
+                                <span
+                                    class="new-task__time"><?= Yii::$app->formatter->asRelativeTime($response['date_add']) ?></span>
+                            </div>
+                            <div class="feedback-card__content">
+                                <p><?= $response['description'] ?></p>
+                                <span><?= $response['price'] ?> ₽</span>
+                            </div>
+                            <? if ($check->isShowActions($response)) : ?>
+                                <div class="feedback-card__actions">
+                                    <a href="<?= Url::to(['/tasks/response-apply', 'taskId' => $task->id, 'responseId' => $response->id, 'userId' => $response->user->id]) ?>"
+                                       class="button__small-color request-button button"
+                                       type="button">Подтвердить</a>
+                                    <a href="<?= Url::to(['/tasks/response-reject', 'id' => $response->id]) ?>"
+                                       class="button__small-color refusal-button button"
+                                       type="button">Отказать</a>
+                                </div>
+                            <? endif; ?>
                         </div>
                     <? endif; ?>
-                </div>
-            <? endforeach; ?>
+                <? endforeach; ?>
+            </div>
         </div>
-    </div>
+    <? endif; ?>
 </section>
 <section class="connect-desk">
     <div class="connect-desk__profile-mini">

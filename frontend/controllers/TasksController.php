@@ -15,6 +15,7 @@ use frontend\models\TaskModel;
 use frontend\models\Task;
 use frontend\models\TaskForm;
 use frontend\models\Response;
+use htmlacademy\controllers\CheckController;
 
 class TasksController extends SecuredController
 {
@@ -55,8 +56,10 @@ class TasksController extends SecuredController
         if (!$task) {
             throw new NotFoundHttpException("Задача с ID $id не найдена");
         }
+        $user = \Yii::$app->user->identity;
+        $check = new CheckController($user, $task);
 
-        return $this->render('view', compact('task'));
+        return $this->render('view', compact('task','check'));
     }
 
     public function actionCreate()
