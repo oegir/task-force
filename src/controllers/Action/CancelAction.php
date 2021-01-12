@@ -8,7 +8,7 @@ class CancelAction extends AbstractAction
 {
     public function getName()
     {
-        return 'Отменено';
+        return 'Отказаться';
     }
 
     public function getRealName()
@@ -16,11 +16,10 @@ class CancelAction extends AbstractAction
         return 'action_cancel';
     }
 
-    public function isRightMethod($user_id, $owner_id, $worker_id): bool
+    public function isRightMethod($user, $task)
     {
         $result = false;
-
-        if ($user_id == $owner_id) {
+        if ($task->user && $user->id == $task->user->user_id && $task->status == 'in work') {
             $result = true;
         }
 

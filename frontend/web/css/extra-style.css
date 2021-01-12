@@ -131,3 +131,16 @@ label.create__file {
   position: absolute;
   width: 1px;
 }
+
+
+.modal{
+  bottom: auto;
+}
+
+.completion-label--yes{
+  padding-left: 0 !important;
+}
+
+#task-reject .help-block {
+  display: none;
+}

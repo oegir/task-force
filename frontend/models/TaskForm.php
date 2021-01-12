@@ -50,7 +50,9 @@ class TaskForm extends Model
         $task->address = "default";
         $task->price = $this->price;
         $task->owner_id = Yii::$app->user->id;
+        $task->status = 'new';
         $task->save();
+
         foreach ($this->file as $file) {
             $taskFile = new TaskFile();
             $taskFile->saveTaskFile($task, $file);
@@ -59,12 +61,12 @@ class TaskForm extends Model
         $taskCategory->saveTaskCategory($task, $this->category);
     }
 
-    public function upload()
+    public function upload(string $path): bool
     {
         foreach ($this->file as $file) {
             $filename = uniqid() . "-" . time();
             $file->name = $filename . "." . $file->extension;
-            $file->saveAs('uploads/' . $filename . '.' . $file->extension);
+            $file->saveAs($path . '/' . $filename . '.' . $file->extension);
         }
         return true;
     }
