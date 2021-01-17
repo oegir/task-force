@@ -35,9 +35,16 @@
 }
 
 .help-block {
-  margin-top: 0;
+  display: none;
+  margin-bottom: 0;
   font-size: 12px;
   font-weight: 300;
+}
+
+.help-block-error:not(:empty){
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .search-task__form input[type="search"],
@@ -143,4 +150,12 @@ label.create__file {
 
 #task-reject .help-block {
   display: none;
+}
+
+.autoComplete_list li{
+  cursor: pointer;
+}
+
+#autoComplete{
+  margin-bottom: 5px;
 }

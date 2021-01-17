@@ -18,5 +18,7 @@ class TaskCreateAsset extends AssetBundle
     public $js = [
             'js/dropzone.js',
             'js/initDropzone.js',
+            'js/autoComplete.min.js',
+            'js/autoCompleteInit.js',
         ];
 }

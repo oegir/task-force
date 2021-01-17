@@ -14,6 +14,9 @@ class TaskForm extends Model
     public $price;
     public $date_expire;
     public $file;
+    public $address;
+    public $latitude;
+    public $longitude;
 
     public static function tableName()
     {
@@ -23,7 +26,7 @@ class TaskForm extends Model
     public function scenarios()
     {
         return [
-            'default' => ['category', 'name', 'description', 'date_expire', 'price', 'file']
+            'default' => ['category', 'name', 'description', 'date_expire', 'price', 'file', 'address', 'latitude', 'longitude']
         ];
     }
 
@@ -47,10 +50,12 @@ class TaskForm extends Model
         $task->description = $this->description;
         $task->date_add = time();
         $task->date_expire = strtotime($this->date_expire);
-        $task->address = "default";
         $task->price = $this->price;
         $task->owner_id = Yii::$app->user->id;
         $task->status = 'new';
+        $task->address = $this->address;
+        $task->latitude = $this->latitude;
+        $task->longitude = $this->longitude;
         $task->save();
 
         foreach ($this->file as $file) {
