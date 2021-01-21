@@ -13,7 +13,7 @@ const autoCompleteJS = new autoComplete({
   observer: true,                      // Input field observer | (Optional)
   threshold: 3,                        // Min. Chars length to start Engine | (Optional)
   debounce: 300,                       // Post duration for engine to start | (Optional)
-  searchEngine: "strict",              // Search Engine type/mode           | (Optional)
+  searchEngine: (query, record) => record,
   resultsList: {                       // Rendered results list object      | (Optional)
     container: source => {
       source.setAttribute("id", "name");
@@ -38,7 +38,7 @@ const autoCompleteJS = new autoComplete({
     result.setAttribute("class", "no_result");
     result.setAttribute("tabindex", "1");
     result.innerHTML = `<span style="display: flex; align-items: center; font-weight: 100; color: rgba(0,0,0,.2);">Found No Results for "${dataFeedback.query}"</span>`;
-    document.querySelector(`#${autoCompleteJS.resultsList.idName}`).appendChild(result);
+    document.querySelector(`.${autoCompleteJS.resultsList.idName}`).appendChild(result);
   },
   onSelection: feedback => {             // Action script onSelection event | (Optional)
     document.querySelector("#autoComplete").blur();

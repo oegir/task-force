@@ -4,8 +4,9 @@
 namespace frontend\controllers;
 
 use Yii;
-use frontend\controllers\ex\RequestException;
 use yii\web\Controller;
+use frontend\controllers\ex\RequestException;
+use GuzzleHttp\Client;
 
 class AjaxController extends Controller
 {
@@ -19,6 +20,20 @@ class AjaxController extends Controller
             'apikey' => Yii::$app->params['geo-coder-apiKey'],
         );
         try {
+//            $client = new Client([
+//                'base_uri' => 'http://geocode-maps.yandex.ru/1.x/',
+//            ]);
+//            $response = $client->request('GET', '', [
+//                'query' => ['geocode' => $value, 'apikey' => Yii::$app->params['geo-coder-apiKey']]
+//            ]);
+//            $content = $response->getBody()->getContents();
+//            $response_data = json_decode($content, true);
+//
+//            if ($response_data->GeoObjectCollection->metaDataProperty->GeocoderResponseMetaData->found > 0) {
+//                $items = $response_data->GeoObjectCollection->featureMember;
+//            }
+            ini_set('default_socket_timeout', 900); // 900 Seconds = 15 Minutes
+
             $response = json_decode(file_get_contents('http://geocode-maps.yandex.ru/1.x/?' . http_build_query($params, '', '&')));
             $coords = [];
             if ($response->response->GeoObjectCollection->metaDataProperty->GeocoderResponseMetaData->found > 0) {
