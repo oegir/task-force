@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-use frontend\helpers\SiteHelper;
+use htmlacademy\helpers\SiteHelper;
 use frontend\widgets\Modal;
 use frontend\widgets\Rate;
 

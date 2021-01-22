@@ -1,7 +1,7 @@
 <?php
 
 
-namespace frontend\controllers\ex;
+namespace htmlacademy\controllers\ex;
 
 
 class FileFormatException extends \Exception

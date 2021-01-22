@@ -5,8 +5,13 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
-use frontend\controllers\ex\RequestException;
+use yii\helpers\ArrayHelper;
+
+use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
 
 class AjaxController extends Controller
 {
@@ -14,34 +19,33 @@ class AjaxController extends Controller
     {
 
         $this->layout = false;
-        $params = array(
-            'geocode' => $value,
-            'format' => 'json',
-            'apikey' => Yii::$app->params['geo-coder-apiKey'],
-        );
+        $client = new Client([
+            'base_uri' => 'http://geocode-maps.yandex.ru/1.x/',
+        ]);
         try {
-//            $client = new Client([
-//                'base_uri' => 'http://geocode-maps.yandex.ru/1.x/',
-//            ]);
-//            $response = $client->request('GET', '', [
-//                'query' => ['geocode' => $value, 'apikey' => Yii::$app->params['geo-coder-apiKey']]
-//            ]);
-//            $content = $response->getBody()->getContents();
-//            $response_data = json_decode($content, true);
-//
-//            if ($response_data->GeoObjectCollection->metaDataProperty->GeocoderResponseMetaData->found > 0) {
-//                $items = $response_data->GeoObjectCollection->featureMember;
-//            }
-            ini_set('default_socket_timeout', 900); // 900 Seconds = 15 Minutes
+            $request = new Request('GET', '');
 
-            $response = json_decode(file_get_contents('http://geocode-maps.yandex.ru/1.x/?' . http_build_query($params, '', '&')));
-            $coords = [];
-            if ($response->response->GeoObjectCollection->metaDataProperty->GeocoderResponseMetaData->found > 0) {
-                $items = $response->response->GeoObjectCollection->featureMember;
+            $response = $client->send($request,[
+                'query' => ['geocode' => $value, 'apikey' => Yii::$app->params['geo-coder-apiKey'], 'format' => 'json']
+            ]);
+
+            if ($response->getStatusCode() !== 200) {
+                throw new BadResponseException("Response error: " . $response->getReasonPhrase(), $request);
+            }
+            $content = $response->getBody()->getContents();
+            $response_data = json_decode($content, true);
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                throw new ServerException("Invalid json format", $request);
+            }
+            if ($error = ArrayHelper::getValue($response_data, 'error.info')) {
+                throw new BadResponseException("API error: " . $error, $request);
+            }
+            if ($response_data['response']['GeoObjectCollection']['metaDataProperty']['GeocoderResponseMetaData']['found']> 0) {
+                $items = $response_data['response']['GeoObjectCollection']['featureMember'];
                 foreach ($items as $item) {
-                    $pieces = explode(" ", $item->GeoObject->Point->pos);
+                    $pieces = explode(" ", $item['GeoObject']['Point']['pos']);
                     $coords[] = [
-                        'name' => $item->GeoObject->name,
+                        'name' => $item['GeoObject']['name'],
                         'latitude' => $pieces[1],
                         'longitude' => $pieces[0],
                     ];
