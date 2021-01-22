@@ -1,6 +1,6 @@
 <?
 
-use frontend\helpers\SiteHelper;
+use htmlacademy\helpers\SiteHelper;
 use frontend\widgets\Rate;
 use yii\widgets\ActiveForm;
 

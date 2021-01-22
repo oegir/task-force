@@ -45,8 +45,11 @@ $names = [
             <span>Загрузите файлы, которые помогут исполнителю лучше выполнить или оценить работу</span>
             <div class="create__file"></div>
             <label for="13">Локация</label>
-            <input class="input-navigation input-middle input" id="13" type="search" name="q"
+            <input class="input-navigation input-middle input" id="autoComplete" type="search" name="q"
                    placeholder="Санкт-Петербург, Калининский район">
+            <?= $form->field($model, 'address')->hiddenInput(['id' => 'js-address-input'])->label(false) ?>
+            <?= $form->field($model, 'latitude')->hiddenInput(['id' => 'js-latitude-input'])->label(false) ?>
+            <?= $form->field($model, 'longitude')->hiddenInput(['id' => 'js-longitude-input'])->label(false) ?>
             <span>Укажите адрес исполнения, если задание требует присутствия</span>
             <div class="create__price-time">
                 <?= $form->

@@ -1,6 +1,6 @@
 <?
 
-use frontend\helpers\SiteHelper;
+use htmlacademy\helpers\SiteHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 

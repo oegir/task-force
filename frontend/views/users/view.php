@@ -1,6 +1,6 @@
 <?php
 
-use \frontend\helpers\SiteHelper;
+use \htmlacademy\helpers\SiteHelper;
 use frontend\widgets\Rate;
 
 $tasksCount = count($user->tasks);
