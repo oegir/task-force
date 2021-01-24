@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\helpers;
+namespace htmlacademy\helpers;
 
 use DateTime;
 

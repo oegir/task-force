@@ -35,11 +35,13 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'password'], 'required'],
+            [['name', 'email', 'password', 'city_id'], 'required'],
             [['date_last'], 'safe'],
             [['name'], 'string', 'max' => 48],
             [['email'], 'string', 'max' => 128],
             [['password'], 'string', 'max' => 64],
+            [['city_id'], 'integer'],
+            [['city_id'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['city_id' => 'id']],
         ];
     }
 
@@ -54,6 +56,7 @@ class User extends \yii\db\ActiveRecord
             'email' => 'Email',
             'password' => 'Password',
             'date_last' => 'Date Last',
+            'city_id' => 'City ID',
         ];
     }
 
@@ -140,5 +143,15 @@ class User extends \yii\db\ActiveRecord
         }
 
         return $rate;
+    }
+
+    /**
+     * Gets query for [[City]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCity()
+    {
+        return $this->hasOne(City::className(), ['id' => 'city_id']);
     }
 }

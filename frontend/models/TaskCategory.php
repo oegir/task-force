@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use Yii;
 
 /**
  * This is the model class for table "task_category".
@@ -22,6 +21,13 @@ class TaskCategory extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'task_category';
+    }
+
+    public function scenarios()
+    {
+        return [
+            'default' => ["task", 'category']
+        ];
     }
 
     /**
@@ -67,5 +73,13 @@ class TaskCategory extends \yii\db\ActiveRecord
     public function getTask()
     {
         return $this->hasMany(Task::class, ['id' => 'task_id']);
+    }
+
+    public function saveTaskCategory($task, $category_id)
+    {
+        $task_category = new TaskCategory();
+        $task_category->task_id = $task->id;
+        $task_category->category_id = $category_id;
+        $task_category->save();
     }
 }

@@ -1,12 +1,14 @@
 <?
 
-use frontend\helpers\SiteHelper;
+use htmlacademy\helpers\SiteHelper;
 use frontend\widgets\Rate;
 use yii\widgets\ActiveForm;
 
 /** @var $users */
 /** @var $categories */
 /** @var $model */
+
+$this->title = 'TaskForce | Список исполнителей';
 
 ?>
 <section class="user__search">

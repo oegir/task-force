@@ -8,7 +8,7 @@ class CompleteAction extends AbstractAction
 {
     public function getName()
     {
-        return 'Выполнено';
+        return 'Завершить';
     }
 
     public function getRealName()
@@ -16,11 +16,10 @@ class CompleteAction extends AbstractAction
         return 'action_complete';
     }
 
-    public function isRightMethod($user_id, $owner_id, $worker_id): bool
+    public function isRightMethod($user, $task)
     {
         $result = false;
-
-        if ($user_id == $owner_id) {
+        if ($task->status == 'in work' && $task->owner_id == $user->id) {
             $result = true;
         }
 

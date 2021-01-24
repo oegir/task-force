@@ -2,7 +2,6 @@
 
 namespace frontend\models;
 
-use Yii;
 
 /**
  * This is the model class for table "task".
@@ -16,6 +15,7 @@ use Yii;
  * @property string $address
  * @property float $latitude
  * @property float $longitude
+ * @property float $status
  *
  * @property TaskCategory[] $taskCategories
  */
@@ -35,8 +35,8 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'date_add', 'date_expire', 'price', 'address', 'latitude', 'longitude'], 'required'],
-            [['description', 'address'], 'string'],
+            [['name', 'description'], 'required'],
+            [['description', 'address', 'status'], 'string'],
             [['date_add', 'date_expire'], 'safe'],
             [['price'], 'integer'],
             [['latitude', 'longitude'], 'number'],
@@ -59,6 +59,7 @@ class Task extends \yii\db\ActiveRecord
             'address' => 'Address',
             'latitude' => 'Latitude',
             'longitude' => 'Longitude',
+            'status' => 'Status',
         ];
     }
 
@@ -71,7 +72,7 @@ class Task extends \yii\db\ActiveRecord
     public function getCategories()
     {
         return $this->hasMany(Category::className(), ['id' => 'category_id'])->
-        viaTable("task_category",['task_id'=>'id']);
+        viaTable("task_category", ['task_id' => 'id']);
     }
 
     /**
@@ -85,11 +86,11 @@ class Task extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[User]].
+     * Gets query for [[Owner]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
+    public function getOwner()
     {
         return $this->hasOne(User::className(), ['id' => 'owner_id']);
     }
@@ -103,4 +104,15 @@ class Task extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Response::className(), ['task_id' => 'id']);
     }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(UserTask::className(), ['task_id' => 'id']);
+    }
+
 }

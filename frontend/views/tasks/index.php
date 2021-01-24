@@ -1,11 +1,13 @@
 <?
 
-use frontend\helpers\SiteHelper;
+use htmlacademy\helpers\SiteHelper;
 use yii\widgets\ActiveForm;
 
 /** @var $tasks */
 /** @var $categories */
 /** @var $model */
+
+$this->title = 'TaskForce | Список задач';
 
 ?>
 

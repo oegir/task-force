@@ -8,7 +8,7 @@ class WorkAction extends AbstractAction
 {
     public function getName()
     {
-        return 'В работе';
+        return 'В работу';
     }
 
     public function getRealName()
@@ -16,14 +16,18 @@ class WorkAction extends AbstractAction
         return 'action_work';
     }
 
-    public function isRightMethod($user_id, $owner_id, $worker_id): bool
+    public function isRightMethod($user, $task)
     {
         $result = false;
 
-        if ($user_id == $worker_id) {
-            $result = true;
-        }
+        if ($task->status == 'new') {
+            if ($task->user && $user->id == $task->user->user_id) {
+                $result = false;
+            } else {
+                $result = true;
+            }
 
+        }
         return $result;
     }
 }

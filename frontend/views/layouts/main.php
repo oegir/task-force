@@ -27,7 +27,6 @@ AppAsset::register($this);
     </div>
 </main>
 <?= \Yii::$app->view->renderFile('@app/views/layouts/common/footer.php'); ?>
-<?= \Yii::$app->view->renderFile('@app/views/layouts/common/modals.php'); ?>
 </div>
 <div class="overlay"></div>
 <?php $this->endBody() ?>
