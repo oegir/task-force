@@ -1,4 +1,8 @@
 <?php
+use frontend\modules\api\Module;
+use yii\rest\UrlRule;
+use frontend\modules\api\controllers\v1\MessagesController;
+
 $params = array_merge(
     require __DIR__ . '/../../common/config/params.php',
     require __DIR__ . '/../../common/config/params-local.php',
@@ -13,7 +17,7 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'modules' => [
         'api' => [
-            'class' => 'frontend\modules\api\Module'
+            'class' => Module::class,
         ]
     ],
     'components' => [
@@ -56,7 +60,14 @@ return [
                 'users/<id:\d+>'   => 'users/view',
                 'users/user/<id:\d+>'   => 'users/user',
                 'register'   => 'site/signup',
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/messages']
+                [
+                    'class' => UrlRule::class,
+                    'controller' => 'api/v1/messages',
+                    'extraPatterns' => [
+                        'GET {id}' => 'index',
+                        'POST' => 'create',
+                    ],
+                ],
             ],
         ],
     ],
